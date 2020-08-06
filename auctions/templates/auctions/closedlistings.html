@@ -1,0 +1,44 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+<div class="ui container">
+<div>
+    <h1 class="ui horizontal divider header">
+        <i class="circular clock icon"></i>
+        Closed Listings
+    </h1>
+</div>
+    {% for l in listing %}
+    <div class="ui divded items vertical segment">
+        <div class="item">
+            <div class="ui small image">
+                <div class="image">
+                {% if l.img %}
+                <div>
+                    <img src="{{ l.img }}">
+                </div>           
+                {% else %}
+                <div>
+                    <i class="massive file image icon"></i> 
+                </div>
+                </div>
+        {% endif %}
+            </div>
+            <div class="content">
+                <div class="header" href="{% url 'auctions:auction_details' l.title %}">
+                    {{ l.title }}
+                </div>
+                <div class="meta">
+                    <span class="date">{{ l.listing_date }} by {{ l.owner }}</span>
+                </div>
+                <div class="description">
+                {{ l.description }}
+                </div>
+                <div class="extra content">
+                    <p>End price: £{{ l.start_bid }}.00</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+    {% endblock %}

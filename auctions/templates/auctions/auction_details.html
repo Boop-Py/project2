@@ -1,0 +1,129 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+<div class="ui container main_body">
+    <div class="ui segment">
+        <h1 class="ui horizontal divider header">
+            <i>
+            {% if l.img %}
+                <div>
+                    <img src="{{ l.img }}">
+                </div>
+            {% else %}
+                <div>
+                    <i class="massive file image icon"></i>
+                </div>
+            {% endif %}
+            </i>
+            {{ l.title }}
+        </h1>
+    </div>
+    <div class="ui two bottom attached buttons">
+        <a class="ui green button" href="{% url 'auctions:add' l.title %}">
+            <i class="plus icon"></i>Add to watchlist
+        </a>
+        <a class="ui red button" href="{% url 'auctions:remove' l.title %}">
+            <i class="minus icon"></i>Remove from watchlist
+        </a>
+    </div>  
+    <div class="ui items">
+        <div class="item">     
+            <div class="content">
+                <a class="header"> Current Price: £{{ current_price }}.00 </a>
+                <div class="meta">
+                    <span>Description:</span>
+                </div>
+                <div class="description">
+                    <p>{{ l.description }}</p>
+                </div>
+                <div class="extra">
+                    <p>Category: {{ l.category }} </p>
+                    <p>Created by: {{ l.owner }} </p> 
+                    <p>Starting price: £{{ l.start_bid }}.00 </p>
+                </div>
+            </div>
+        </div>
+    </div>                                
+    <div class="ui segment">
+        <div class="ui two column very relaxed grid">
+            <div class="column">
+            <h3 class="ui dividing header">
+                <i class="pound sign icon"></i>
+                Bid on this item:
+            </h3>    
+                <div class="ui relaxed list">
+                    {% for bid in bids %}
+                    <div class="item">  
+                        <i class="user icon"></i>
+                        <div class="content">
+                            <p class="content">{{ bid.user | title }}</p>
+                            <div class="header">
+                                Amount bid: <b>£{{ bid.bid }}.00 </b>
+                            </div> 
+                            <div class="metadata">
+                                <span class="date">{{ bid.bid_date }}</span>
+                            </div> 
+                        </div>  
+                    </div>    
+                    {% endfor %}                          
+                </div>  
+                <div class="field"> 
+                    <div class="ui fluid form">
+                        <form action="{% url 'auctions:bidding' l.title %}" method="post">
+                        {% csrf_token %}                      
+                        <div class="ui right labeled input">
+                            <label for="amount" class="ui label">£</label>
+                            {{ bid_form.bid }}
+                            <div class="ui basic label">.00</div>                          
+                        </div>
+                        <div>
+                            <button class="ui primary submit button" type="submit" value="Bid">
+                            Place your bid!
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>               
+            <div class="column">
+                <div class="ui comments">
+                    <h3 class="ui dividing header">
+                        <i class="comments outline icon"></i>
+                        Leave a comment!
+                    </h3>
+                    {% for comment in comments %} 
+                    <div class="comment">
+                        <a class="avatar">
+                            <i class="comment icon"></i>
+                        </a>
+                        <div class="content">
+                            <a class="author">{{ comment.user | title }}</a>
+                            <div class="metadata">
+                                <span class="date">{{ comment.comment_date }}</span>
+                            </div>
+                            <div class="text">
+                            <p>{{ comment.comment }}</p>
+                            </div>
+                        </div>
+                    </div>       
+                    {% endfor %}
+                </div>
+                <div>
+                    <form class="ui reply form" action="{% url 'auctions:comment' l.title %}" method="post">
+                    <div class="field">
+                    {% csrf_token %}
+                    {{ form.comment }}
+                    </div>
+                    <div>
+                        <button class="ui primary submit labeled icon button" type="submit">
+                        <i class="icon edit"></i> Add Comment
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>             
+        <div class="ui vertical divider">
+            and
+        </div>
+    </div>
+</div>
+
+{% endblock %}

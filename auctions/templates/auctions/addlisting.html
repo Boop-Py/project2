@@ -1,0 +1,51 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+<div class="ui container">
+<h1 class="ui horizontal divider header">
+    <i class="plus icon"></i>
+    Add a new listing
+</h1>
+    <div class="ui form">
+        <form action="{% url 'auctions:add_listing' %}" method="post">
+            {% csrf_token %}
+            <div class="field">
+                <label>Title</label>
+                <input type="text" placeholder="Title" name="title" required>
+            </div>
+            <div class="field">
+                <label>Category:</label>
+                <select class="ui search dropdown" name="category">
+                    <option value="">Select Category</option>
+                    <option value="Home, Garden + Accessories">Home, Garden + Accessories</option>
+                    <option value="Sport, Leisure + Outdoor">Sport, Leisure + Outdoor</option>
+                    <option value="Fashion + Accessories">Fashion + Accessories</option>
+                    <option value="Health + Beauty">Health + Beauty</option>
+                    <option value="Baby, Children + Toys">Baby, Children + Toys</option>
+                    <option value="Vehicles, Parts + Accessories">Vehicles, Parts + Accessories</option>
+                    <option value="Electronics + Accessories">Electronics + Accessories</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Description:</label>
+                <textarea type="text" name="description" required></textarea>
+            </div>
+            <div class="field">
+                <label>Starting Price</label>
+                <div class="ui right labeled input">
+                    <label for="amount" class="ui label">£</label>
+                    <input type="text" placeholder="Amount" id="amount" name="start_bid" required>
+                    <div class="ui basic label">.00</div>
+                </div>
+            </div>
+            <div class="field">
+                <label>Image URL (optional)</label>
+                <input type="text" placeholder="Image" name="img">
+            </div>          
+            <button class="ui green button" type="submit">
+                Create Listing!
+            </button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

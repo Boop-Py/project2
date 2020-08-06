@@ -1,0 +1,16 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+<div class="ui container">
+    <h1 class="ui horizontal divider header">
+        <i class="tag icon"></i>
+        Categories
+    </h1>
+      {% for category in categories %}
+    <div class="ui compact segment">
+        <div class="header">
+            <a href="{% url 'auctions:sort_by_category' category %}"> {{ category }} </a>
+        </div>
+    </div>
+      {% endfor %}
+</div>
+{% endblock %}

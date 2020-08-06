@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{% block title %}{% endblock %}</title>
+        <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+        
+    </head>
+    <body>  
+        <div class="ui teal inverted stackable menu no_corners">
+            <div class="item">
+                <h4>Stronk</h4>
+            </div>
+            {% if user.is_authenticated %}
+                <a class="item" href="{% url 'auctions:index' %}">Active Listings</a>
+                <a class="item" href="{% url 'auctions:closed_listings' %}">Closed Listings</a>
+                <a class="item" href="{% url 'auctions:categories' %}">Categories</a>
+                <a class="item" href="{% url 'auctions:watchlist' %}">Watchlist</a>
+                <a class="item" href="{% url 'auctions:add_listing' %}">Create New Listing</a>
+            <div class="right menu">
+                <a class="item" href="#">Signed in as {{ user.username }}</a>
+                <a class="item" href="{% url 'auctions:logout' %}">Log Out</a>
+            </div>
+            {% else %}
+            <div class="right menu">
+                <a class="item" href="{% url 'auctions:register' %}">Register</a>                
+                <a class="item" href="{% url 'auctions:login' %}">Login</a> 
+            </div>    
+            {% endif %}          
+        </div>
+        <div class="ui container main_body">    
+            {% if messages %}
+            <div class="ui message">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+            </div>   
+        {% endif %}
+        </div>
+        {% block body %}
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,35 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+{% if message %}
+    <div>{{ message }}</div>
+{% endif %}
+
+<div class="ui container">
+    <div class="heading">
+        <h1 class="ui horizontal divider header">
+            <i class="user circle icon"></i>
+            Login
+        </h1>
+    </div>
+    <div class="ten column centered row">
+        <form action="{% url 'auctions:login' %}" method="post">
+        {% csrf_token %}
+        <div class="ui form">
+            <div class="two fields">
+                <div class="five wide field column">
+                    <input placeholder="Username" type="text" name="username">
+                </div>
+                <div class="five wide field column">
+                <input placeholder="Password" type="password" name="password">
+                </div>
+            </div>
+        </div>
+        <div>
+            <button class="ui button" type="submit" value="Login">Submit
+        </div>
+        </form>
+    </div>
+
+    Don't have an account? <a href="{% url 'auctions:register' %}">Register here.</a>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+<div class="ui container">
+    <h1 class="ui horizontal divider header">
+        <i class="search icon"></i>
+        Watchlist
+    </h1>
+    <div class="ui cards">
+        {% for watchlist in watchlists %}
+        {% if empty %}
+            <li> Currently there is no item </li>
+        {% endif %}   
+        <div class="card">
+            <div class="content">
+                <div class="header">
+                    <a href="{% url 'auctions:auction_details' watchlist %}"> {{ watchlist }}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

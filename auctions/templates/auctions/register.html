@@ -1,0 +1,38 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+<div class="ui container">
+<h1 class="ui horizontal divider header">
+    <i class="pen square icon"></i>
+    Register
+</h1>
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+<form action="{% url 'auctions:register' %}" method="post">
+    {% csrf_token %}
+    <div class="ui center aligned form">
+      <div class="fields">
+        <div class="field">
+          <input type="text" placeholder="Username" name="username" required>
+        </div>
+        <div class="field">
+          <input type="email" placeholder="Email Address" name="email" required>
+        </div>
+        <div class="equal width fields">
+            <div class="field">
+              <input type="password" placeholder="Password" name="password" required>
+            </div>
+            <div class="field">
+              <input type="password" placeholder="Confirm Password" name="confirmation" required>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button class="ui button" type="submit" value="Login">Submit
+     </div>
+</form>
+    Already have an account? <a href="{% url 'auctions:login' %}">Log in here.</a>
+</div>
+{% endblock %}

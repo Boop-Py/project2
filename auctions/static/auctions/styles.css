@@ -1,0 +1,17 @@
+@media (max-width: 600px) {
+    .main {
+        border-radius: 0px;
+    }
+    
+.no_corners {
+    border-radius: 0px !important;
+}
+
+.small_form {
+    width: 10%;
+}
+
+div#main_body {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
