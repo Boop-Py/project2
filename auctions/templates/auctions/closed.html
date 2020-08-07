@@ -1,0 +1,40 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+<div class="ui container main_body">
+    <div class="ui segment">
+        <h1 class="ui horizontal divider header">
+            <i>
+            {% if l.img %}
+                <div>
+                    <img src="{{ l.img }}">
+                </div>
+            {% else %}
+                <div>
+                    <i class="massive file image icon"></i>
+                </div>
+            {% endif %}
+            </i>
+            {{ l.title }}
+        </h1>
+    </div>
+    <div class="ui items">
+        <div class="item">     
+            <div class="content">
+                <a class="header"> Current Price: £{{ current_price }}.00 </a>
+                <div class="meta">
+                    <span>Description:</span>
+                </div>
+                <div class="description">
+                    <p>{{ l.description }}</p>
+                </div>
+                <div class="extra">
+                    <p>Category: {{ l.category }} </p>
+                    <p>Created by: {{ l.owner }} </p> 
+                    <p>Starting price: £{{ l.start_bid }}.00 </p>
+                </div>
+            </div>
+        </div>
+    </div>                                
+</div>
+
+{% endblock %}

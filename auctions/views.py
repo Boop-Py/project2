@@ -89,7 +89,7 @@ def add_listing(request):
             owner = current_user,
             img = img)
         messages.add_message(request,messages.SUCCESS, "Your listing is created succesfully")
-        return HttpResponseRedirect("/")
+        return HttpResponseRedirect("/auctions/")
     else:
         return render(request,"auctions/addlisting.html")
  
@@ -143,7 +143,7 @@ def category(request):
                     {"categories": categories})
 
 def sort_by_category(request, category):
-    items_in_category = Listing.objects.filter(category=category)
+    items_in_category = Listing.objects.filter(category=category, status="ACTIVE")
     return render(request, "auctions/index.html", 
                     {"listing": items_in_category})
                                      
@@ -159,9 +159,9 @@ def comment(request, title):
            user = user, 
            list = listing, 
            comment = comment)
-           return HttpResponseRedirect("/"+ title)
+           return HttpResponseRedirect("/auctions/"+ title)
     else:
-        return HttpResponseRedirect("/")
+        return HttpResponseRedirect("/auctions/")
 
 @login_required(login_url="auctions/login") 
 def bidding(request, title):
@@ -185,14 +185,14 @@ def bidding(request, title):
            last_bid = form.cleaned_data["bid"]
            if current_price >= last_bid:
                messages.add_message(request, messages.WARNING, "Please bid higher")
-               return HttpResponseRedirect("/" + title)
+               return HttpResponseRedirect("/auctions/" + title)
            else:
                Bid.objects.create(
                user = user, 
                list = listing, 
                bid = last_bid)
                messages.add_message(request, messages.WARNING, "Succesfully bid on item")
-               return HttpResponseRedirect("/" + title)
+               return HttpResponseRedirect("/auctions/" + title)
         else:
            messages.add_message(request, messages.WARNING, "Invalid form")
            return render(request, "auctions/pagedetails.html",
@@ -229,7 +229,7 @@ def closed(request, title):
     if not messages:
         messages.add_message(request, messages.SUCCESS,
                          "Succesfully closed listing")
-    return render(request, "auctions/sold.html",
+    return render(request, "auctions/closed.html",
                     {"l": listing, 
                     "form": Comment_Form,
                     "comments": Comment.objects.filter(list=listing), 
